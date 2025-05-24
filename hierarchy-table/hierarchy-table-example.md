@@ -8,10 +8,6 @@ title: "md-to-pdf Configuration Hierarchy"
 
 # Hierarchy Table of md-to-pdf
 
-A handy table that helps you navigate the hierarchy of md-to-pdf content matter.
-
-## Plugins, Configs, and Assets
-
 | Configuration Aspect                                     | Highest Precedence (Wins)                                                                                                | Middle Precedence                                                                                                         | Lowest Precedence (Base)                                                                 | Effect of `--factory-defaults` Flag                                                                 |
 | :------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------ | :--------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------- |
 | **Main Config** <br> (Globals: `pdf_viewer`, `params`, `global_pdf_options`, initial plugin registration) | `--config <project_specific.yaml>`                                                                                       | `~/.config/md-to-pdf/config.yaml` (XDG)                                                                   | `~/md-to-pdf/config.yaml` <br> (or `~/md-to-pdf/config.example.yaml` as fallback)        | Uses `~/md-to-pdf/config.example.yaml` only.                                                        |
