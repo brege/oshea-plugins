@@ -2,7 +2,7 @@
 class HierarchyTableHandler {
     constructor(coreUtils) {
         // coreUtils contains { DefaultHandler, markdownUtils, pdfGenerator }
-        this.handler = new coreUtils.DefaultHandler(); // Corrected: removed extra 'new'
+        this.handler = new coreUtils.DefaultHandler(); 
     }
 
     async generate(data, pluginSpecificConfig, globalConfig, outputDir, outputFilenameOpt, pluginBasePath) {
