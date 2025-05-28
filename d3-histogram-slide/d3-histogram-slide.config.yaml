@@ -1,0 +1,20 @@
+description: "A plugin to display a D3.js histogram and math equations on a slide."
+handler_script: "index.js"
+css_files:
+  - "d3-histogram-slide.css"
+
+pdf_options:
+  format: "Letter"
+  landscape: true
+  printBackground: true
+  margin:
+    top: "0.5in"
+    right: "0.5in"
+    bottom: "0.5in"
+    left: "0.5in"
+
+math:
+  enabled: true
+
+inject_fm_title_as_h1: false
+aggressiveHeadingCleanup: false
