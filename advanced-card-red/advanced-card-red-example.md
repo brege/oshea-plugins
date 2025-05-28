@@ -10,7 +10,9 @@ brandingColor: "#c0392b" # A shade of red (e.g., Pomegranate)
 ### Crimson Tech Inc.
 
 **Email:** a.smith@crimsontech.example.com
+
 **Phone:** +1-555-0205
+
 **Web:** [crimsontech.example.com/asmith](https://www.crimsontech.example.com/asmith)
 
 *Innovative Engineering, Bold Solutions*

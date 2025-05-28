@@ -1,4 +1,4 @@
-# examples/custom_plugin_showcase/advanced-card/advanced-card.config.yaml
+# examples/custom_plugin_showcase/advanced-card-red/advanced-card-red.config.yaml
 description: "An advanced card plugin with a RED theme, demonstrating custom HTML and dynamic content."
 handler_script: "index.js"
 css_files:
