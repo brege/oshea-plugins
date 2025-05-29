@@ -1,4 +1,5 @@
 ---
+md_to_pdf_plugin: ./advanced-card-red.config.yaml
 website: "https://www.crimsontech.example.com/asmith"
 qr_data: "mailto:a.smith@crimsontech.example.com"
 brandingColor: "#c0392b" # A shade of red (e.g., Pomegranate)
