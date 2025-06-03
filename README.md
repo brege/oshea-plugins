@@ -9,6 +9,7 @@ This collection currently includes the following plugins:
 * **`advanced-card-red/`**: An example business card plugin featuring a vibrant red theme and dynamic QR code generation.
 * **`d3-histogram-slide/`**: A plugin for generating presentation-style slides that embed interactive D3.js histograms and render LaTeX math equations.
 * **`hierarchy-table/`**: A plugin for displaying hierarchical data in a formatted table, useful for organizational charts or nested data structures.
+* **`restaurant-menu/`**: An advanced plugin for generating elegant, print-ready restaurant menus from Markdown, featuring custom HTML handling and grayscale logo integration.
 
 ## How to Use These Plugins with `md-to-pdf`
 
@@ -39,6 +40,7 @@ Once the collection is added, you can list all available plugins and get detaile
     ```bash
     md-to-pdf plugin help advanced-card-red
     md-to-pdf plugin help d3-histogram-slide
+    md-to-pdf plugin help restaurant-menu
     ```
 
 ### 3. Convert Documents Using a Plugin
@@ -57,6 +59,13 @@ After adding the collection, you can use any of its plugins with the `md-to-pdf 
 
     ```bash
     md-to-pdf convert d3-histogram-slide-example.md --plugin d3-histogram-slide
+    ```
+
+  * **Example: Generate a Restaurant Menu:**
+    If you have the `restaurant-menu-example.md` from this repository, you can generate the menu using:
+
+    ```bash
+    md-to-pdf convert restaurant-menu-example.md --plugin restaurant-menu
     ```
 
 ---

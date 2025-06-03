@@ -21,8 +21,8 @@ cli_help: |
   Configuration Notes (restaurant-menu.config.yaml):
     - handler_script: Points to "index.js". This is the custom handler that generates the menu's HTML.
     - pdf_options: Adjust page size (e.g., Letter), margins, etc., as needed for printing.
-    - css_files: Points to "restaurant-menu.css". Modify this file for custom styling.
-    - params.logo_file: (string, optional) Path to the logo image (e.g., `./logo.jpg`). This path is relative to the plugin's base directory.
+    - css_files: Points to "restaurant-menu.css". Modify or override this file for custom styling.
+    - params.logo_file: (string, optional) Path to the logo image (e.g., `./logo.png`). This path is relative to the plugin's base directory.
 
   Example Usage (after registration, or for self-activation):
     md-to-pdf convert my_document.md --plugin restaurant-menu
@@ -149,6 +149,3 @@ It showcases advanced `md-to-pdf` features, particularly the use of a custom han
     ```
     or via manual registration before using it.
 
----
-
-**Note:** This plugin was generated as an archetype of the "./md-to-pdf/plugins/template-basic" plugin. You may need to update its content, registration paths, and internal references if you customize it further.
