@@ -1,4 +1,4 @@
-// ../md-to-pdf-plugins/hierarchy-table/index.js
+// ../oshea-plugins/hierarchy-table/index.js
 class HierarchyTableHandler {
     constructor(coreUtils) {
         // coreUtils contains { DefaultHandler, markdownUtils, pdfGenerator }

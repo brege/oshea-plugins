@@ -17,7 +17,7 @@ cli_help: |
     - pdf_options: Defines landscape orientation, page size (e.g., Letter), and minimal margins.
 
   Example Usage:
-    md-to-pdf convert my-table-slide.md --plugin hierarchy-table
+    oshea convert my-table-slide.md --plugin hierarchy-table
 ---
 
 # `hierarchy-table` Plugin
@@ -26,13 +26,13 @@ This plugin transforms a Markdown file containing a table (and optionally a titl
 
 ## Creating This Plugin: A Developer's Trace
 
-This plugin was developed to showcase how `md-to-pdf` can be extended for specific presentation needs. Here's a conceptual trace of its creation:
+This plugin was developed to showcase how `oshea` can be extended for specific presentation needs. Here's a conceptual trace of its creation:
 
 1.  **Initialization (Conceptual `plugin create`):**
     The plugin structure was started (conceptually) using:
     ```bash
-    # From within the main md-to-pdf repository:
-    # md-to-pdf plugin create hierarchy-table --dir ../md-to-pdf-plugins
+    # From within the main oshea repository:
+    # oshea plugin create hierarchy-table --dir ../oshea-plugins
     ```
     This command (if run) would generate boilerplate files:
     * `hierarchy-table/hierarchy-table.config.yaml`
@@ -79,13 +79,13 @@ This plugin was developed to showcase how `md-to-pdf` can be extended for specif
     For this plugin, the standard `DefaultHandler` (provided by `coreUtils` to the plugin constructor) is sufficient. It processes the Markdown (including the table) into HTML, and the CSS + PDF options handle the rest. The `index.js` remained the simple boilerplate that delegates to `DefaultHandler`.
 
 7.  **Documentation (`README.md` and `cli_help`):**
-    This README file was updated to explain the plugin's purpose, expected input, configuration, and provide usage examples. The `cli_help` front matter section was filled out for `md-to-pdf plugin help hierarchy-table`.
+    This README file was updated to explain the plugin's purpose, expected input, configuration, and provide usage examples. The `cli_help` front matter section was filled out for `oshea plugin help hierarchy-table`.
 
 8.  **Testing and Iteration:**
     The plugin was tested by converting `hierarchy-table-example.md`:
     ```bash
-    # Assuming 'hierarchy-table' is registered in a relevant md-to-pdf config.yaml
-    md-to-pdf convert path/to/hierarchy-table-example.md --plugin hierarchy-table
+    # Assuming 'hierarchy-table' is registered in a relevant oshea config.yaml
+    oshea convert path/to/hierarchy-table-example.md --plugin hierarchy-table
     ```
     CSS and `pdf_options` were tweaked until the desired slide appearance was achieved.
 
@@ -98,17 +98,17 @@ This plugin was developed to showcase how `md-to-pdf` can be extended for specif
 
     Example: See `hierarchy-table-example.md`.
 
-2.  **Ensure the plugin is registered** in your `md-to-pdf` configuration (XDG or project-level `config.yaml`).
+2.  **Ensure the plugin is registered** in your `oshea` configuration (XDG or project-level `config.yaml`).
     Example registration:
     ```yaml
     # In your main config.yaml
     document_type_plugins:
-      hierarchy-table: "/path/to/md-to-pdf-plugins/hierarchy-table/hierarchy-table.config.yaml"
+      hierarchy-table: "/path/to/oshea-plugins/hierarchy-table/hierarchy-table.config.yaml"
     ```
 
 3.  **Convert your file:**
     ```bash
-    md-to-pdf convert your_slide_content.md --plugin hierarchy-table --outdir ./slides
+    oshea convert your_slide_content.md --plugin hierarchy-table --outdir ./slides
     ```
 
 ## Customization

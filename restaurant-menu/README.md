@@ -2,7 +2,7 @@
 cli_help: |
   Plugin: restaurant-menu
 
-  Description: A plugin for `md-to-pdf` to generate elegant, print-ready restaurant menus. It leverages advanced custom handler capabilities to produce a visually formatted menu with a grayscale logo and specific typographical styling.
+  Description: A plugin for `oshea` to generate elegant, print-ready restaurant menus. It leverages advanced custom handler capabilities to produce a visually formatted menu with a grayscale logo and specific typographical styling.
 
 
   Features:
@@ -16,7 +16,7 @@ cli_help: |
     - title: (string) Main title for the menu (e.g., "Farmer's Market Menu").
     - date: (string or date, optional) Date of the menu.
     - footerNote: (string, optional) A small note at the bottom of the menu (e.g., acknowledging suppliers).
-    - md_to_pdf_plugin: (string) Must be set to `restaurant-menu` for self-activation with example.
+    - oshea_plugin: (string) Must be set to `restaurant-menu` for self-activation with example.
 
   Configuration Notes (restaurant-menu.config.yaml):
     - handler_script: Points to "index.js". This is the custom handler that generates the menu's HTML.
@@ -25,21 +25,21 @@ cli_help: |
     - params.logo_file: (string, optional) Path to the logo image (e.g., `./logo.png`). This path is relative to the plugin's base directory.
 
   Example Usage (after registration, or for self-activation):
-    md-to-pdf convert my_document.md --plugin restaurant-menu
+    oshea convert my_document.md --plugin restaurant-menu
 ---
 
 # `restaurant-menu` Plugin
 
 This plugin provides a customizable template for generating restaurant menus from Markdown.
-The example menu is adapted from a previous [Farm-to-fork pop-up](https://brege.org/recipes/menus/) 
-I used to run. 
-It showcases advanced `md-to-pdf` features, particularly the use of a custom handler for precise HTML generation.
+The example menu is adapted from a previous [Farm-to-fork pop-up](https://brege.org/recipes/menus/)
+I used to run.
+It showcases advanced `oshea` features, particularly the use of a custom handler for precise HTML generation.
 
 ## About This Plugin
 
 * **Functionality**
 
-  Unlike basic templates, this `restaurant-menu` plugin *does not* use the `DefaultHandler`. Instead, its `index.js` contains a custom `RestaurantMenuHandler` class that completely controls the HTML output. This allows for complex layouts, dynamic content integration (like processing and embedding images), and fine-grained control over the final PDF appearance. 
+  Unlike basic templates, this `restaurant-menu` plugin *does not* use the `DefaultHandler`. Instead, its `index.js` contains a custom `RestaurantMenuHandler` class that completely controls the HTML output. This allows for complex layouts, dynamic content integration (like processing and embedding images), and fine-grained control over the final PDF appearance.
 
   It processes your Markdown menu content, embeds a grayscale logo, and applies sophisticated styling via `restaurant-menu.css` and `restaurant-menu.config.yaml`.
 
@@ -69,45 +69,45 @@ It showcases advanced `md-to-pdf` features, particularly the use of a custom han
 
     The generated `restaurant-menu-example.md` is pre-configured to use this plugin directly via its front matter. To test, simply navigate into your new plugin's directory and run:
     ```bash
-    md-to-pdf restaurant-menu-example.md
+    oshea restaurant-menu-example.md
     ```
-    This works because `md-to-pdf` includes "self-activation" logic that automatically detects and loads plugins whose configuration files are co-located with the Markdown file being processed (when specified via front matter).
+    This works because `oshea` includes "self-activation" logic that automatically detects and loads plugins whose configuration files are co-located with the Markdown file being processed (when specified via front matter).
 
 3.  **Registering the Plugin**
 
-    To use the `restaurant-menu` plugin with *any* Markdown file by its name 
-    (e.g., `md-to-pdf convert another.md --plugin restaurant-menu`), 
+    To use the `restaurant-menu` plugin with *any* Markdown file by its name
+    (e.g., `oshea convert another.md --plugin restaurant-menu`),
 
     **Option A** -- Automatic Registration
     ```bash
-    md-to-pdf plugin add ./restaurant-menu --name restaurant-menu
+    oshea plugin add ./restaurant-menu --name restaurant-menu
     ```
     This assumes you clone the parent repository of this plugin via normal Git methods.
 
     **Option B** -- Registering via the built-in Collection Manager
 
-    `md-to-pdf` can install plugins from GitHub repositories as well:
+    `oshea` can install plugins from GitHub repositories as well:
     ```bash
-    md-to-pdf collection add https://github.com/brege/md-to-pdf-plugins --name brege-plugins
-    md-to-pdf plugin list brege-plugins --short
+    oshea collection add https://github.com/brege/oshea-plugins --name brege-plugins
+    oshea plugin list brege-plugins --short
     # ...
     # Available (CM)            | restaurant-menu          | brege-plugins/restaurant-menu
-    
-    md-to-pdf plugin enable brege-plugins/restaurant-menu
-    # md-to-pdf plugin: Attempting to enable plugin...
+
+    oshea plugin enable brege-plugins/restaurant-menu
+    # oshea plugin: Attempting to enable plugin...
     # Plugin Identifier: my-archetypes/my-restaurant-menu
     # Plugin "my-archetypes/my-restaurant-menu" enabled successfully as "my-restaurant-menu".
-    # To use this plugin with md-to-pdf, invoke it as: md-to-pdf convert ... --plugin my-restaurant-menu
+    # To use this plugin with oshea, invoke it as: oshea convert ... --plugin my-restaurant-menu
     ```
     This way, if a change is made on the remote, you can sync them via
     ```bash
-    md-to-pdf collection update  # [ brege-plugins ]
+    oshea collection update  # [ brege-plugins ]
     ```
 
     **Option C** -- Manual Registration
 
-    You can also register this plugin in a main `md-to-pdf` configuration file 
-    (e.g., your user-level `~/.config/md-to-pdf/config.yaml` or a project-specific `config.yaml`).
+    You can also register this plugin in a main `oshea` configuration file
+    (e.g., your user-level `~/.config/oshea/config.yaml` or a project-specific `config.yaml`).
     ```yaml
     # In your main config.yaml
     plugins:
@@ -122,7 +122,7 @@ It showcases advanced `md-to-pdf` features, particularly the use of a custom han
 
     Once registered, you can invoke it by name from any directory:
     ```bash
-    md-to-pdf convert path/to/any_document.md --plugin restaurant-menu
+    oshea convert path/to/any_document.md --plugin restaurant-menu
     ```
 
 5.  **Developing a Cloned Version of this Plugin -- Archetyping**
@@ -133,19 +133,19 @@ It showcases advanced `md-to-pdf` features, particularly the use of a custom han
 
     **Option 1** -- If `restaurant-menu` plugin **is registered** already (via Option A, B, or C above)
     ```bash
-    md-to-pdf plugin create my-restaurant-menu --from restaurant-menu --dir ./my-restaurant-menu
+    oshea plugin create my-restaurant-menu --from restaurant-menu --dir ./my-restaurant-menu
     ```
-    
+
     **Option 2** -- If `restaurant-menu` **is NOT registered**, but its directory is locally accessible
-     (assuming you are in the directory containing this plugin, e.g., 'md-to-pdf-plugins')
+     (assuming you are in the directory containing this plugin, e.g., 'oshea-plugins')
     ```
-    md-to-pdf plugin create my-restaurant-menu --from ./restaurant-menu --dir ./my-restaurant-menu
+    oshea plugin create my-restaurant-menu --from ./restaurant-menu --dir ./my-restaurant-menu
     ```
 
     After archetyping, remember to register your *new* plugin (`my-restaurant-menu`)
     using
-    ```bash 
-    md-to-pdf plugin add ./my-restaurant-menu --name my-restaurant-menu
+    ```bash
+    oshea plugin add ./my-restaurant-menu --name my-restaurant-menu
     ```
     or via manual registration before using it.
 

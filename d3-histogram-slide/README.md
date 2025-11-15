@@ -13,7 +13,7 @@ cli_help: |
 
   Expected Front Matter:
     - title: (string) The title of the slide, which will be displayed in an H1 tag.
-    - md_to_pdf_plugin: (string) Should be set to "d3-histogram-slide" to invoke this plugin.
+    - oshea_plugin: (string) Should be set to "d3-histogram-slide" to invoke this plugin.
 
   Configuration Notes (d3-histogram-slide.config.yaml):
     - css_files: Point to your custom CSS.
@@ -21,7 +21,7 @@ cli_help: |
     - math: Enable or disable KaTeX math rendering (e.g., `enabled: true`).
 
   Example Usage:
-    md-to-pdf convert document.md --plugin d3-histogram-slide
+    oshea convert document.md --plugin d3-histogram-slide
 ---
 
 # d3-histogram-slide Plugin

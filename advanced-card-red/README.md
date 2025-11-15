@@ -22,7 +22,7 @@ cli_help: |
     - printBackground: true.
 
   Example Usage (assuming registered appropriately):
-    md-to-pdf convert path/to/example.md --plugin advanced-card-red
+    oshea convert path/to/example.md --plugin advanced-card-red
 ---
 
 # Advanced Card RED Plugin (`advanced-card-red`) - Showcase Example

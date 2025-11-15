@@ -1,4 +1,5 @@
 const fs = require('fs').promises;
+const fss = require('fs');
 const path = require('path');
 
 class D3HistogramSlideHandler {
@@ -6,23 +7,35 @@ class D3HistogramSlideHandler {
         this.markdownUtils = coreUtils.markdownUtils;
         this.pdfGenerator = coreUtils.pdfGenerator;
         this.d3ScriptContent = '';
+        this.katexCssContent = '';
     }
 
-    async loadD3Script(pluginBasePath) {
+    async loadScriptsAndStyles(pluginBasePath, globalConfig) {
+        // Load D3.js script
         if (!this.d3ScriptContent) {
             const d3Path = path.resolve(pluginBasePath, 'd3.v7.min.js');
             try {
                 this.d3ScriptContent = await fs.readFile(d3Path, 'utf8');
             } catch (err) {
                 console.error(`ERROR (D3HistogramSlide): Failed to load d3.v7.min.js from ${d3Path}`, err);
-                this.d3ScriptContent = 'console.error("Failed to load D3.js library. Please ensure d3.v7.min.js is in the plugin directory.");';
+                this.d3ScriptContent = 'console.error("Failed to load D3.js library.");';
+            }
+        }
+        // Load KaTeX CSS
+        if (!this.katexCssContent && globalConfig.projectRoot) {
+            const katexCssPath = path.resolve(globalConfig.projectRoot, 'assets/css/katex.min.css');
+            try {
+                this.katexCssContent = await fs.readFile(katexCssPath, 'utf8');
+                console.log(`INFO (D3HistogramSlide): Loaded KaTeX CSS from ${katexCssPath}`);
+            } catch (err) {
+                 console.warn(`WARN (D3HistogramSlide): Could not load KaTeX CSS from ${katexCssPath}.`);
             }
         }
     }
 
     async generate(data, pluginSpecificConfig, globalConfig, outputDir, outputFilenameOpt, pluginBasePath) {
         console.log(`INFO (D3HistogramSlide): Processing for plugin '${pluginSpecificConfig.description}'`);
-        await this.loadD3Script(pluginBasePath);
+        await this.loadScriptsAndStyles(pluginBasePath, globalConfig);
 
         const { markdownFilePath } = data;
         
@@ -52,12 +65,11 @@ class D3HistogramSlideHandler {
                     slideTitleHtml = `<h1>${frontMatter.title || 'Slide Content'}</h1>`;
                     mainContentHtml = fullRenderedHtml;
                 }
-
             } catch (err) {
-                console.warn(`WARN (D3HistogramSlide): Could not read Markdown file ${markdownFilePath}. Using default/error content. Error: ${err.message}`);
+                console.warn(`WARN (D3HistogramSlide): Could not read Markdown file ${markdownFilePath}. Error: ${err.message}`);
             }
         } else {
-             console.warn(`WARN (D3HistogramSlide): No markdownFilePath provided. Using default/error content.`);
+             console.warn(`WARN (D3HistogramSlide): No markdownFilePath provided.`);
         }
         
         const htmlBodyContent = `
@@ -75,9 +87,7 @@ class D3HistogramSlideHandler {
                 </div>
             </div>
             <script>
-                ${this.d3ScriptContent}
-            </script>
-            <script>
+                // D3 rendering script is now injected after the main d3.js library
                 (function() {
                     if (typeof d3 === 'undefined') {
                         console.error('D3.js is not loaded. Histogram cannot be drawn.');
@@ -110,7 +120,7 @@ class D3HistogramSlideHandler {
                         .attr("preserveAspectRatio", "xMidYMid meet")
                         .attr("width", "100%")
                         .attr("height", "100%")
-                      .append("g")
+                       .append("g")
                         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
                     const x = d3.scaleLinear().domain([0, d3.max(data)]).range([0, plotWidth]);
@@ -153,7 +163,7 @@ class D3HistogramSlideHandler {
                 })();
             </script>
         `;
-
+        
         const outputFilename = outputFilenameOpt || `${this.markdownUtils.generateSlug(frontMatter.title || 'd3-histogram-slide')}.pdf`;
         const finalOutputPdfPath = path.join(outputDir, outputFilename);
 
@@ -167,22 +177,7 @@ class D3HistogramSlideHandler {
         };
         if (pdfOptions.width || pdfOptions.height) { delete pdfOptions.format; }
 
-        const cssFileContentsArray = [];
-        if (pluginSpecificConfig.math && pluginSpecificConfig.math.enabled) {
-            if (globalConfig.projectRoot) { 
-                const katexCssPath = path.resolve(globalConfig.projectRoot, 'assets/css/katex.min.css');
-                try {
-                    const katexCss = await fs.readFile(katexCssPath, 'utf8');
-                    cssFileContentsArray.unshift(katexCss);
-                    console.log(`INFO (D3HistogramSlide): Loaded KaTeX CSS from ${katexCssPath}`);
-                } catch (err) {
-                    console.warn(`WARN (D3HistogramSlide): Could not load KaTeX CSS from ${katexCssPath}. Math may not be styled correctly. Error: ${err.message}`);
-                }
-            } else {
-                console.warn(`WARN (D3HistogramSlide): globalConfig.projectRoot not available. Cannot reliably determine KaTeX CSS path for custom handler.`);
-            }
-        }
-
+        let cssFileContentsArray = [];
         if (pluginSpecificConfig.css_files && Array.isArray(pluginSpecificConfig.css_files)) {
             for (const cssFile of pluginSpecificConfig.css_files) {
                 const cssFilePath = path.resolve(pluginBasePath, cssFile);
@@ -194,11 +189,22 @@ class D3HistogramSlideHandler {
             }
         }
         
+        // ** THE FIX **
+        // Inject KaTeX CSS and D3.js directly into the <head> of the document.
+        const injectionPoints = {
+            head_html: `
+                <style>${this.katexCssContent}</style>
+                <script>${this.d3ScriptContent}</script>
+            `
+        };
+
         await this.pdfGenerator.generatePdf(
             htmlBodyContent,
             finalOutputPdfPath,
             pdfOptions,
-            cssFileContentsArray
+            cssFileContentsArray,
+            null, // Use default template
+            injectionPoints
         );
 
         console.log(`INFO (D3HistogramSlide): Successfully generated PDF: ${finalOutputPdfPath}`);

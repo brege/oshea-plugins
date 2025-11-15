@@ -1,4 +1,4 @@
-# ../md-to-pdf-plugins/hierarchy-table/hierarchy-table.config.yaml
+# ../oshea-plugins/hierarchy-table/hierarchy-table.config.yaml
 description: "Plugin to display a Markdown table as a presentation slide, ideal for hierarchies or structured data."
 handler_script: "index.js"
 css_files:
