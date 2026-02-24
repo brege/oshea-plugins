@@ -23,7 +23,7 @@ class D3HistogramSlideHandler {
         }
         // Load KaTeX CSS
         if (!this.katexCssContent && globalConfig.projectRoot) {
-            const katexCssPath = path.resolve(globalConfig.projectRoot, 'assets/css/katex.min.css');
+            const katexCssPath = path.resolve(globalConfig.projectRoot, 'assets/katex.min.css');
             try {
                 this.katexCssContent = await fs.readFile(katexCssPath, 'utf8');
                 console.log(`INFO (D3HistogramSlide): Loaded KaTeX CSS from ${katexCssPath}`);
@@ -192,7 +192,7 @@ class D3HistogramSlideHandler {
         // ** THE FIX **
         // Inject KaTeX CSS and D3.js directly into the <head> of the document.
         const injectionPoints = {
-            head_html: `
+            headHtml: `
                 <style>${this.katexCssContent}</style>
                 <script>${this.d3ScriptContent}</script>
             `

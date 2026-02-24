@@ -1,6 +1,6 @@
 ---
 title: "D3 Histogram and Blackbody Radiation"
-md_to_pdf_plugin: "d3-histogram-slide" 
+oshea_plugin: "d3-histogram-slide" 
 ---
 
 # D3.js Histogram & Blackbody Radiation Equation

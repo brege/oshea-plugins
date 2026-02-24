@@ -11,7 +11,7 @@ tags:
 title: Farmer's Market Menu
 footerNote: "we gladly acknowledge Eatwell Farm for delivering their amazing CSA share box to our door and inspiring our menu"
 
-md_to_pdf_plugin: restaurant-menu  
+oshea_plugin: restaurant-menu  
 ---
 
 {{% menu %}}
